@@ -27,6 +27,7 @@ char home_dir[100000];
 #include "history.h"
 #include "exec.h"
 #include "watch.h"
+#include "env.h"
 void execute(char *command, char *home_dir, struct history* front, struct history* rear, int count)
 {
 	int i = 0, len=0;
@@ -50,6 +51,8 @@ void execute(char *command, char *home_dir, struct history* front, struct histor
 		show_history(command, i+1, front, rear, count);
 	else if(strcmp(cmd, "nightswatch")==0)
 		watch(command);
+	else if(strcmp(cmd, "setenv")==0)
+		set_env(command);
 	else
 		exec(cmd, command, i+1);
 

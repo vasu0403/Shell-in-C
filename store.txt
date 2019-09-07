@@ -1,0 +1,11 @@
+setenv hello
+setenv hello ert
+setenv hello
+setenv
+setenv f
+setenv
+q
+setenv h
+setenv h hello
+setenv user hello
+setenv user hello hel
