@@ -1,20 +1,20 @@
-google-chrome &
-firefox &
-jobs
-atom &
-atom
-jobs
-atom
-emacs
 jobs
 emacs &
-gedit &
+p &
 emacs &
+p &
+jobs
+kjob 1 9
 jobs
 emacs &
+p &
 jobs
-gedit &
 emacs &
+p &
+emacs &
+p &
 jobs
-ls
+p &
+jobs
+p &
 jobs

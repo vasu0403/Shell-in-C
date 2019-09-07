@@ -57,6 +57,8 @@ void execute(char *command, char *home_dir, struct history* front, struct histor
 		unset_env(command);
 	else if(strcmp(cmd, "jobs")==0)
 		jobs(command);
+	else if(strcmp(cmd, "kjob")==0)
+		kjobs(command);
 	else
 		exec(cmd, command, i+1);
 

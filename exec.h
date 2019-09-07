@@ -8,16 +8,13 @@ void handler(int sig)
 	pid = waitpid(0, &status, WNOHANG);
 	strcpy(all_jobs[job_pid_to_job_number[pid]].job_status, "Stopped");
 	sprintf(exit, "\n%s with pid %d exited.\n", name[pid], pid);
-	if ( WIFEXITED(status) ) 
-    { 
-        int ret = WEXITSTATUS(status);
-        if(ret==0)         
-        	sprintf(exit_status, "normally\n");
-        else
-        	sprintf(exit_status, "abnormally\n");
-    } 	
-   if(pid >0)
-   {
+    int ret = WEXITSTATUS(status);
+    if(ret==0)         
+    	sprintf(exit_status, "normally\n");
+    else
+    	sprintf(exit_status, "abnormally\n");
+    if(pid >0)
+    {
 	    write(2, exit, strlen(exit));
 	    write(2, exit_status, strlen(exit_status));
 	    print_prompt(home_dir);
@@ -57,11 +54,16 @@ void background(char *cmd)
 	char *args[1000];
 	char *end_cmd;
 	char *token=strtok_r(cmd," ",&end_cmd);
+	char *temp = (char *)malloc(max_len * sizeof(char));
 	int i=0;
 	while(token!=NULL)
 	{
 		if(strcmp(token, "&")!=0)
+		{	
 			args[i++]=token;
+			strcat(temp, token);
+			strcat(temp, " ");
+		}
 		token = strtok_r(NULL, " ", &end_cmd);
 	}
 	args[i] = NULL;
@@ -83,7 +85,7 @@ void background(char *cmd)
 		all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
 		all_jobs[no_of_jobs].job_pid = pid;
 		strcpy(all_jobs[no_of_jobs].job_status, "Running");
-		strcpy(all_jobs[no_of_jobs].job_name, args[0]);
+		strcpy(all_jobs[no_of_jobs].job_name, temp);
 		job_pid_to_job_number[pid] = no_of_jobs;
 		no_of_jobs++;
 	}
