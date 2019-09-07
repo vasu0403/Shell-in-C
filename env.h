@@ -23,5 +23,26 @@ void set_env(char *command)
 		printf("Invalid number of arguments\n");
 		return;
 	}
-	printf("%s %s\n", var, val);
+	if(setenv(var, val, 1)!=0)
+		perror("Error");
+	return;
+}
+void unset_env(char *command)
+{
+	char *end_cmd;
+	char *token = strtok_r(command, " ", &end_cmd);
+	if(strlen(end_cmd) == 0)
+	{
+		printf("Invalid number of arguments\n");
+		return;
+	}
+	token = strtok_r(NULL, " ", &end_cmd);
+	if(strlen(end_cmd) != 0)
+	{
+		printf("Invalid number of arguments\n");
+		return;
+	}
+	if(unsetenv(token)!=0)
+		perror("Error");
+	return;
 }

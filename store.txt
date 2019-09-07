@@ -1,11 +1,20 @@
 setenv hello
-setenv hello ert
+setenv hello bye
+setenv hello
+setenv hello bye
 setenv hello
 setenv
-setenv f
-setenv
-q
-setenv h
-setenv h hello
-setenv user hello
-setenv user hello hel
+setenv hello
+setenv hello bye
+setenv USER hello
+setenv USER vasu
+hello bye
+setenv hello bye
+setebv hello
+setenv hello
+unsetenv hello
+setenv hello bye
+setebv hello go
+setenv hello go
+unsetenv hello
+setenv hello bye

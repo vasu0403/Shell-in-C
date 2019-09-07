@@ -37,22 +37,24 @@ void execute(char *command, char *home_dir, struct history* front, struct histor
 	while(i<strlen(command) && command[i]!=' ')
 		cmd[len++] = command[i++];
 	cmd[len] = '\0';
-	if(strcmp(cmd, "cd")==0)
+	if(strcmp(cmd, "cd") == 0)
 		changeDir(command, i+1, home_dir);
-	else if(strcmp(cmd, "pwd")==0)
+	else if(strcmp(cmd, "pwd") == 0)
 		showDir(command, i+1, home_dir);
-	else if(strcmp(cmd, "echo")==0)
+	else if(strcmp(cmd, "echo") == 0)
 		echo(command, i+1);
-	else if(strcmp(cmd, "ls")==0)
+	else if(strcmp(cmd, "ls") == 0)
 		ls(command, i+1, home_dir);
-	else if(strcmp(cmd, "pinfo")==0)
+	else if(strcmp(cmd, "pinfo") == 0)
 		pinfo(command, i+1);
-	else if(strcmp(cmd, "history")==0)
+	else if(strcmp(cmd, "history") == 0)
 		show_history(command, i+1, front, rear, count);
-	else if(strcmp(cmd, "nightswatch")==0)
+	else if(strcmp(cmd, "nightswatch") == 0)
 		watch(command);
-	else if(strcmp(cmd, "setenv")==0)
+	else if(strcmp(cmd, "setenv") == 0)
 		set_env(command);
+	else if(strcmp(cmd, "unsetenv") == 0)
+		unset_env(command);
 	else
 		exec(cmd, command, i+1);
 
