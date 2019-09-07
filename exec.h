@@ -6,6 +6,7 @@ void handler(int sig)
 	char* exit = (char *)malloc(max_len*sizeof(char));
 	char* exit_status = (char *)malloc(max_len*sizeof(char));
 	pid = waitpid(0, &status, WNOHANG);
+	strcpy(all_jobs[job_pid_to_job_number[pid]].job_status, "Stopped");
 	sprintf(exit, "\n%s with pid %d exited.\n", name[pid], pid);
 	if ( WIFEXITED(status) ) 
     { 
@@ -78,8 +79,13 @@ void background(char *cmd)
 	}
 	else
 	{
-			strcpy(name[pid], args[0]);
-			// printf("%s\n", name[pid]);
+		strcpy(name[pid], args[0]);
+		all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
+		all_jobs[no_of_jobs].job_pid = pid;
+		strcpy(all_jobs[no_of_jobs].job_status, "Running");
+		strcpy(all_jobs[no_of_jobs].job_name, args[0]);
+		job_pid_to_job_number[pid] = no_of_jobs;
+		no_of_jobs++;
 	}
 	return;
 }

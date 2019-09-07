@@ -16,8 +16,7 @@
 #include<termios.h>
 #include<stdbool.h>
 #include<sys/ioctl.h>
-const int max_len = 1e5, max_path = 1e4;
-char home_dir[100000];
+#include "declarations.h"
 #include "prompt.h"
 #include "cd.h"
 #include "pwd.h"
@@ -28,6 +27,7 @@ char home_dir[100000];
 #include "exec.h"
 #include "watch.h"
 #include "env.h"
+#include "job.h"
 void execute(char *command, char *home_dir, struct history* front, struct history* rear, int count)
 {
 	int i = 0, len=0;
@@ -55,6 +55,8 @@ void execute(char *command, char *home_dir, struct history* front, struct histor
 		set_env(command);
 	else if(strcmp(cmd, "unsetenv") == 0)
 		unset_env(command);
+	else if(strcmp(cmd, "jobs")==0)
+		jobs(command);
 	else
 		exec(cmd, command, i+1);
 

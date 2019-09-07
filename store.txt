@@ -1,20 +1,20 @@
-setenv hello
-setenv hello bye
-setenv hello
-setenv hello bye
-setenv hello
-setenv
-setenv hello
-setenv hello bye
-setenv USER hello
-setenv USER vasu
-hello bye
-setenv hello bye
-setebv hello
-setenv hello
-unsetenv hello
-setenv hello bye
-setebv hello go
-setenv hello go
-unsetenv hello
-setenv hello bye
+google-chrome &
+firefox &
+jobs
+atom &
+atom
+jobs
+atom
+emacs
+jobs
+emacs &
+gedit &
+emacs &
+jobs
+emacs &
+jobs
+gedit &
+emacs &
+jobs
+ls
+jobs
