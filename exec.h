@@ -20,8 +20,6 @@ void handler(int sig)
 	char* exit = (char *)malloc(max_len*sizeof(char));
 	char* exit_status = (char *)malloc(max_len*sizeof(char));
 	pid = waitpid(0, &status, WNOHANG);
-	// strcpy(all_jobs[job_pid_to_job_number[pid]].job_status, "Stopped");
-	remove_from_jobs(job_pid_to_job_number[pid]);
 	sprintf(exit, "\n%s with pid %d exited.\n", name[pid], pid);
     int ret = WEXITSTATUS(status);
     if(ret==0)         
@@ -30,6 +28,7 @@ void handler(int sig)
     	sprintf(exit_status, "abnormally\n");
     if(pid >0)
     {
+		remove_from_jobs(job_pid_to_job_number[pid]);
 	    write(2, exit, strlen(exit));
 	    write(2, exit_status, strlen(exit_status));
 	    print_prompt(home_dir);

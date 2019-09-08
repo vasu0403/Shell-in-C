@@ -34,6 +34,8 @@ void kjobs(char *command)
 		printf("Invalid job number\n");
 		return;
 	}
+	if(sig == 19)
+		strcpy(all_jobs[job_num-1].job_status, "Stopped");
 	kill(all_jobs[job_num-1].job_pid, sig);
 	return;
 }
@@ -52,4 +54,5 @@ void run_in_bg(char *command)
 	pid_t pid_no = all_jobs[job_no].job_pid;
 	printf("%d\n", pid_no);
 	kill(pid_no, SIGCONT);
+	strcpy(all_jobs[job_no].job_status, "Running");
 }
