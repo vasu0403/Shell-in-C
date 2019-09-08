@@ -36,5 +36,20 @@ void kjobs(char *command)
 	}
 	kill(all_jobs[job_num-1].job_pid, sig);
 	return;
-
+}
+void run_in_bg(char *command)
+{
+	char *end_cmd;
+	char *token = strtok_r(command, " ", &end_cmd);
+	token = strtok_r(NULL, " ", &end_cmd);
+	int job_no = atoi(token);
+	job_no--;
+	if(job_no > no_of_jobs)
+	{
+		printf("Invalid job number\n");
+		return;
+	}
+	pid_t pid_no = all_jobs[job_no].job_pid;
+	printf("%d\n", pid_no);
+	kill(pid_no, SIGCONT);
 }

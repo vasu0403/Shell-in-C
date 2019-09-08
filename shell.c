@@ -59,6 +59,8 @@ void execute(char *command, char *home_dir, struct history* front, struct histor
 		jobs(command);
 	else if(strcmp(cmd, "kjob")==0)
 		kjobs(command);
+	else if(strcmp(cmd, "bg")==0)
+		run_in_bg(command);
 	else
 		exec(cmd, command, i+1);
 

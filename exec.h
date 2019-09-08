@@ -1,4 +1,18 @@
 char name[100000][20];
+int check = 1;
+void remove_from_jobs(int x)
+{
+	for(int i=x; i<no_of_jobs-1; i++)
+	{
+		all_jobs[i].job_number = i+1;
+		strcpy(all_jobs[i].job_name, all_jobs[i+1].job_name);
+		strcpy(all_jobs[i].job_status, all_jobs[i+1].job_status);
+		all_jobs[i].job_pid = all_jobs[i+1].job_pid;
+		job_pid_to_job_number[all_jobs[i+1].job_pid] = i;
+	}
+	no_of_jobs--;
+	return;
+}
 void handler(int sig)
 {
 	pid_t pid;
@@ -6,7 +20,8 @@ void handler(int sig)
 	char* exit = (char *)malloc(max_len*sizeof(char));
 	char* exit_status = (char *)malloc(max_len*sizeof(char));
 	pid = waitpid(0, &status, WNOHANG);
-	strcpy(all_jobs[job_pid_to_job_number[pid]].job_status, "Stopped");
+	// strcpy(all_jobs[job_pid_to_job_number[pid]].job_status, "Stopped");
+	remove_from_jobs(job_pid_to_job_number[pid]);
 	sprintf(exit, "\n%s with pid %d exited.\n", name[pid], pid);
     int ret = WEXITSTATUS(status);
     if(ret==0)         
