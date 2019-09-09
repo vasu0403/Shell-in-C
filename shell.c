@@ -36,7 +36,11 @@ void control()
 }
 void stop()
 {
-	;
+	if(global_pid != shell_pid)
+	{
+		kill(global_pid, SIGSTOP);
+
+	}
 }
 void execute(char *command, char *home_dir, struct history* front, struct history* rear, int count)
 {
@@ -75,6 +79,8 @@ void execute(char *command, char *home_dir, struct history* front, struct histor
 		run_in_bg(command);
 	else if(strcmp(cmd, "overkill")==0)
 		overkill(command);
+	else if(strcmp(cmd, "fg")==0)
+		run_in_fg(command);
 	else
 		exec(cmd, command, i+1);
 

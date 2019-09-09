@@ -1,20 +1,20 @@
-emacs &
-kjob 1 9
 jobs
+fg 1
 emacs &
-kjob 1 9
- jobs
-jobs
-kjob 1 9
-cd ..
-cd Shell-in-C
-ls
-touch hello.c
-ls
+fg 1
 emacs &
-jobs
-emacs *
+fg 1
+emacs &
+fg 1
+emacs &
+fg 1
 jobs
 emacs &
 jobs
-emacs
+fg 1
+jobs
+emacs &
+gedit &
+jobs
+fg 1
+jobs
