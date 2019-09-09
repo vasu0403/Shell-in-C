@@ -15,7 +15,6 @@ void remove_from_jobs(int x)
 }
 void check_for_background()
 {
-	printf("*\n");
 	int pid;
 	int status;
 	while((pid = waitpid(-1, &status, WNOHANG)) > 0)

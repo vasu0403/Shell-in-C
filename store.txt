@@ -1,15 +1,3 @@
-kjob 1 9
-jobs
-emacs &
-kjob 1 9
-jobs
-emacs &
-kjob 1 9
- jobs
-jobs
-emacs &
-kjob 1 9
-jobs
 emacs &
 kjob 1 9
 jobs
@@ -18,3 +6,15 @@ kjob 1 9
  jobs
 jobs
 kjob 1 9
+cd ..
+cd Shell-in-C
+ls
+touch hello.c
+ls
+emacs &
+jobs
+emacs *
+jobs
+emacs &
+jobs
+emacs
