@@ -1,4 +1,4 @@
-char name[100000][20];
+
 int check = 1;
 void remove_from_jobs(int x)
 {
@@ -13,29 +13,53 @@ void remove_from_jobs(int x)
 	no_of_jobs--;
 	return;
 }
-void handler(int sig)
+void check_for_background()
 {
-	pid_t pid;
+	printf("*\n");
+	int pid;
 	int status;
-	char* exit = (char *)malloc(max_len*sizeof(char));
-	char* exit_status = (char *)malloc(max_len*sizeof(char));
-	pid = waitpid(0, &status, WNOHANG);
-	sprintf(exit, "\n%s with pid %d exited.\n", name[pid], pid);
-    int ret = WEXITSTATUS(status);
-    if(ret==0)         
-    	sprintf(exit_status, "normally\n");
-    else
-    	sprintf(exit_status, "abnormally\n");
-    if(pid >0)
-    {
-		remove_from_jobs(job_pid_to_job_number[pid]);
-	    write(2, exit, strlen(exit));
-	    write(2, exit_status, strlen(exit_status));
-	    print_prompt(home_dir);
+	while((pid = waitpid(-1, &status, WNOHANG)) > 0)
+	{
+		char* exit = (char *)malloc(max_len*sizeof(char));
+		char* exit_status = (char *)malloc(max_len*sizeof(char));
+		sprintf(exit, RED "%s with pid %d exited.\n" RESET, name[pid], pid);
+	    int ret = WEXITSTATUS(status);
+	    if(ret==0)         
+	    	sprintf(exit_status, RED "normally\n" RESET);
+	    else
+	    	sprintf(exit_status, RED "abnormally\n" RESET);
+	    if(pid >0)
+	    {
+			remove_from_jobs(job_pid_to_job_number[pid]);
+		    write(2, exit, strlen(exit));
+		    write(2, exit_status, strlen(exit_status));
+		}
+		free(exit);
 	}
-	free(exit);
-	return;
 }
+// void handler(int sig)
+// {
+// 	pid_t pid;
+// 	int status;
+// 	char* exit = (char *)malloc(max_len*sizeof(char));
+// 	char* exit_status = (char *)malloc(max_len*sizeof(char));
+// 	pid = waitpid(0, &status, WNOHANG);
+// 	sprintf(exit, "\n%s with pid %d exited.\n", name[pid], pid);
+//     int ret = WEXITSTATUS(status);
+//     if(ret==0)         
+//     	sprintf(exit_status, "normally\n");
+//     else
+//     	sprintf(exit_status, "abnormally\n");
+//     if(pid >0)
+//     {
+// 		remove_from_jobs(job_pid_to_job_number[pid]);
+// 	    write(2, exit, strlen(exit));
+// 	    write(2, exit_status, strlen(exit_status));
+// 	    print_prompt(home_dir);
+// 	}
+// 	free(exit);
+// 	return;
+// }
 void foreground(char *cmd)
 {
 	char *end_cmd;
@@ -54,14 +78,18 @@ void foreground(char *cmd)
 	{
 		if(execvp(args[0], args)!=0)
 			printf("Error: No such command\n");
-		exit(0);
 	}
 	else if(pid<0)
 	{	
 		perror("Error");
 	}
 	else
+	{	
+		proc_type[pid] = 0;
+		global_pid = pid;
 		waitpid(pid, &status, 0);
+		global_pid = shell_pid;
+	}
 }
 void background(char *cmd)
 {
@@ -82,9 +110,10 @@ void background(char *cmd)
 	}
 	args[i] = NULL;
 	int pid = fork();
-	signal(SIGCHLD, handler);
+	// signal(SIGCHLD, handler);
 	if(pid == 0)
 	{
+		setpgid(0, 0);
 		if(execvp(args[0], args)!=0)
 			printf("Error: No such command\n");
 		exit(0);
@@ -101,6 +130,7 @@ void background(char *cmd)
 		strcpy(all_jobs[no_of_jobs].job_status, "Running");
 		strcpy(all_jobs[no_of_jobs].job_name, temp);
 		job_pid_to_job_number[pid] = no_of_jobs;
+		proc_type[pid] = 1;
 		no_of_jobs++;
 	}
 	return;

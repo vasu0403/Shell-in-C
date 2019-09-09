@@ -1,20 +1,20 @@
+kjob 1 9
+jobs
 emacs &
 kjob 1 9
 jobs
 emacs &
-gedit &
-jobs
-kjob 1 19
-jobs
-pinfo 31374
-kjob 2 9
+kjob 1 9
+ jobs
 jobs
 emacs &
-gedit &
+kjob 1 9
 jobs
-pinfo 31419
-kjob 1 19
-pinfo 31419
-bg 1
+emacs &
+kjob 1 9
 jobs
-pinfo 31419
+emacs &
+kjob 1 9
+ jobs
+jobs
+kjob 1 9

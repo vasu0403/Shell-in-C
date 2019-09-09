@@ -28,6 +28,16 @@
 #include "watch.h"
 #include "env.h"
 #include "job.h"
+void control()
+{
+	if(global_pid != shell_pid)
+		kill(global_pid, SIGINT);
+	global_pid = shell_pid;
+}
+void stop()
+{
+	;
+}
 void execute(char *command, char *home_dir, struct history* front, struct history* rear, int count)
 {
 	int i = 0, len=0;
@@ -39,6 +49,8 @@ void execute(char *command, char *home_dir, struct history* front, struct histor
 	cmd[len] = '\0';
 	if(strcmp(cmd, "cd") == 0)
 		changeDir(command, i+1, home_dir);
+	else if(strcmp(cmd, "quit")==0)
+		exit(0);
 	else if(strcmp(cmd, "pwd") == 0)
 		showDir(command, i+1, home_dir);
 	else if(strcmp(cmd, "echo") == 0)
@@ -61,6 +73,8 @@ void execute(char *command, char *home_dir, struct history* front, struct histor
 		kjobs(command);
 	else if(strcmp(cmd, "bg")==0)
 		run_in_bg(command);
+	else if(strcmp(cmd, "overkill")==0)
+		overkill(command);
 	else
 		exec(cmd, command, i+1);
 
@@ -75,17 +89,31 @@ int main(int argc, char const *argv[])
 	int count = 0;
 	get_to_curr_dir(argv[0], home_dir);
 	read_file(home_dir, &front, &rear, &count);
+	shell_pid = getpid();
+	global_pid = shell_pid;
+	signal(SIGINT, control);
+	signal(SIGTSTP, stop);
+	clear();
 	while(1)
 	{ 
+		
 		print_prompt(home_dir);
-		char *arg = (char *)malloc( max_len * sizeof(char));
-		scanf(" %[^\n]s", arg);
-		char *command = strtok(arg, ";");
+		char *arg = NULL;
+		size_t len = 0;
+		check_for_background();
+		getline(&arg, &len, stdin);
+		check_for_background();
+		arg[len-1] =  '\0';
+		if(strcmp(arg, "\n")==0)continue;
+		char *end_cmd;
+		char *command = strtok_r(arg, ";", &end_cmd);
 		while(command != NULL)
 		{
+			check_for_background();
 			add_in_history(command, &front, &rear, &count);
 			execute(command, home_dir, front, rear, count);
-			command = strtok(NULL, ";");
+			check_for_background();
+			command = strtok_r(NULL, ";", &end_cmd);
 		}
 		add_to_file(home_dir,front, rear);
 	}

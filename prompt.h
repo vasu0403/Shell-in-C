@@ -47,7 +47,7 @@ void print_prompt(char *home_dir)
 			if(getcwd(curr_dir, max_path)!=NULL)
 			{
 				replace(curr_dir, strlen(home_dir), home_dir);
-				printf("<%s@%s:%s>", user_name, uts.nodename, curr_dir);
+				printf( CYN "<%s@%s:" YEL "%s" CYN ">" RESET, user_name, uts.nodename, curr_dir);
 				fflush(stdout);
 			}
 			else

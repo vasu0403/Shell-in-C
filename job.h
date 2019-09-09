@@ -1,8 +1,13 @@
 void jobs(char *command)
 {
+	if(no_of_jobs == 0)
+	{
+		printf(BLU "No process currently running\n" RESET);
+		return;
+	}
 	for(int i=0; i<no_of_jobs; i++)
 	{
-		printf("[%d] %s %s[%d]\n", all_jobs[i].job_number, all_jobs[i].job_status, all_jobs[i].job_name ,all_jobs[i].job_pid);
+		printf(WHT "[%d] %s %s[%d]\n" RESET, all_jobs[i].job_number, all_jobs[i].job_status, all_jobs[i].job_name ,all_jobs[i].job_pid);
 	}
 	return;
 }
@@ -55,4 +60,16 @@ void run_in_bg(char *command)
 	printf("%d\n", pid_no);
 	kill(pid_no, SIGCONT);
 	strcpy(all_jobs[job_no].job_status, "Running");
+}
+void overkill(char *command)
+{
+	char *end_cmd;
+	char *token = strtok_r(command, " ", &end_cmd);
+	if(strlen(end_cmd)!=0)
+	{
+		printf("Invalid argument!\n");
+		return;
+	}
+	for(int i=0; i<no_of_jobs; i++)
+		kill(all_jobs[i].job_pid, 9);
 }
