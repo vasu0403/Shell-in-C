@@ -22,3 +22,4 @@ int job_pid_to_job_number[100000];
 int proc_type[100000];
 pid_t global_pid, shell_pid;
 char name[100000][20];
+char foreground_proc[100000][30];

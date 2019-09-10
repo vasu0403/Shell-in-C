@@ -1,5 +1,3 @@
-
-int check = 1;
 void remove_from_jobs(int x)
 {
 	for(int i=x; i<no_of_jobs-1; i++)
@@ -61,6 +59,8 @@ void check_for_background()
 // }
 void foreground(char *cmd)
 {
+	char foreground_name[30];
+	strcpy(foreground_name, cmd);
 	char *end_cmd;
 	char *token=strtok_r(cmd," ",&end_cmd);
 	char *args[1000];
@@ -84,9 +84,19 @@ void foreground(char *cmd)
 	}
 	else
 	{	
+		strcpy(foreground_proc[pid], foreground_name);
 		proc_type[pid] = 0;
 		global_pid = pid;
-		waitpid(pid, &status, 0);
+		waitpid(pid, &status, WUNTRACED);
+		while(1)
+		{
+			if(WIFEXITED(status) && WIFSIGNALED(status))
+			{
+				waitpid(pid, &status, WUNTRACED);
+				continue;
+			}
+			break;
+		}
 		global_pid = shell_pid;
 	}
 }

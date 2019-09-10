@@ -38,8 +38,17 @@ void stop()
 {
 	if(global_pid != shell_pid)
 	{
+		strcpy(name[global_pid], foreground_proc[global_pid]);
+		all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
+		all_jobs[no_of_jobs].job_pid = global_pid;
+		strcpy(all_jobs[no_of_jobs].job_status, "Stopped");
+		strcpy(all_jobs[no_of_jobs].job_name, foreground_proc[global_pid]);
+		job_pid_to_job_number[global_pid] = no_of_jobs;
+		printf("\n[%d] + suspended  %s\n", no_of_jobs + 1, name[global_pid]);
+		no_of_jobs++;
 		kill(global_pid, SIGSTOP);
-
+		global_pid = shell_pid;
+		return;
 	}
 }
 void execute(char *command, char *home_dir, struct history* front, struct history* rear, int count)
