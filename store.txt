@@ -1,20 +1,20 @@
-gedit &
-jobs
-bg 2
-bg 3
-jobs
-emacs
-gedit
-jobs
 p &
-jobs
+kd
+clear
 p &
-jobs
-emacs
-gedit
-jobs
-emacs
-jobs
-bg 2
-jobs
-pinfo 16468
+as
+p &
+l
+p &
+ls
+p
+p &
+p
+pinfo
+p
+pinfo
+p
+pinfo
+p
+l
+s

@@ -77,6 +77,7 @@ void foreground(char *cmd)
 	{
 		if(execvp(args[0], args)!=0)
 			printf("Error: No such command\n");
+		exit(0);
 	}
 	else if(pid<0)
 	{	
