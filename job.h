@@ -82,7 +82,16 @@ void run_in_fg(char *command)
 	remove_from_jobs(job_no);
 	kill(pid, SIGCONT);
 	global_pid = pid;
-	waitpid(pid, &status, 0);
+	waitpid(pid, &status, WUNTRACED);
+	while(1)
+	{
+		if(WIFEXITED(status) && WIFSIGNALED(status))
+		{
+			waitpid(pid, &status, WUNTRACED);
+			continue;
+		}
+		break;
+	}
 	global_pid = shell_pid;
 
 }

@@ -1,20 +1,20 @@
-p &
-kd
-clear
-p &
-as
-p &
-l
-p &
+jobs
+emacs &
+jobs
+pinfo 3943
+kjob 1 19
+jobs
+fg 1
+emacs
+jobs
+bg 1
+jobs
+fg 1
+jobs
+emacs
+fg 1
 ls
-p
-p &
-p
-pinfo
-p
-pinfo
-p
-pinfo
-p
-l
-s
+subl exec,h
+emacs
+fg 1
+jobs
