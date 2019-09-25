@@ -1,20 +1,20 @@
+emacs
 jobs
 emacs &
-jobs
-pinfo 3943
-kjob 1 19
-jobs
-fg 1
-emacs
-jobs
-bg 1
-jobs
-fg 1
-jobs
+	
+pinfo
+pindo
+pinfo
+pinf
+pinfo
 emacs
 fg 1
-ls
-subl exec,h
+jobs
+git log
 emacs
 fg 1
+jobs
+emacs
+jobs
+emacs
 jobs

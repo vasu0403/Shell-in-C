@@ -25,7 +25,8 @@ void check_for_background()
 	    	sprintf(exit_status, RED "normally\n" RESET);
 	    else
 	    	sprintf(exit_status, RED "abnormally\n" RESET);
-	    if(pid >0)
+		// printf("%d %d %d %d %d\n", global_pid, pid, shell_pid, getpid(), getppid());
+	    if(pid >0 && pid != global_pid)	
 	    {
 			remove_from_jobs(job_pid_to_job_number[pid]);
 		    write(2, exit, strlen(exit));
@@ -120,7 +121,6 @@ void background(char *cmd)
 	}
 	args[i] = NULL;
 	int pid = fork();
-	// signal(SIGCHLD, handler);
 	if(pid == 0)
 	{
 		setpgid(0, 0);
@@ -134,6 +134,9 @@ void background(char *cmd)
 	}
 	else
 	{
+		printf("%d %d\n", pid, getpgid(pid));
+		setpgid(pid,pid);
+		printf("%d %d\n", pid, getpgid(pid));
 		strcpy(name[pid], args[0]);
 		all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
 		all_jobs[no_of_jobs].job_pid = pid;

@@ -7,6 +7,26 @@ void jobs(char *command)
 	}
 	for(int i=0; i<no_of_jobs; i++)
 	{
+		char *status_path = (char *)malloc(max_len*sizeof(char));
+		char *status = (char *)malloc(100 * sizeof(char));
+		char *pid = (char *)malloc(100 * sizeof(char));
+		sprintf(pid, "%d", all_jobs[i].job_pid);
+		strcpy(status_path, "/proc/");
+		strcat(status_path, pid);
+		strcat(status_path, "/stat");
+		FILE *f1 = fopen(status_path, "r");
+		int c=0;
+		while(fscanf(f1, "%s", status)!=EOF)
+		{
+			c++;
+			if(c==3)
+				break;
+		}
+		fclose(f1);
+		if(strcmp(status, "T")==0)
+			strcpy(all_jobs[i].job_status, "Stopped");
+		else
+			strcpy(all_jobs[i].job_status, "Running");
 		printf(WHT "[%d] %s %s[%d]\n" RESET, all_jobs[i].job_number, all_jobs[i].job_status, all_jobs[i].job_name ,all_jobs[i].job_pid);
 	}
 	return;
@@ -80,9 +100,14 @@ void run_in_fg(char *command)
 	int pid = all_jobs[job_no -1].job_pid;
 	printf("Running %s in foreground\n", all_jobs[job_no-1].job_name);
 	remove_from_jobs(job_no);
-	kill(pid, SIGCONT);
 	global_pid = pid;
-	waitpid(pid, &status, WUNTRACED);
+	printf("%d\n", pid);
+	int shell = getpid();
+	signal(SIGTTOU, SIG_IGN);
+	kill(pid, SIGCONT);
+	tcsetpgrp(0, getpgid(pid));
+	signal(SIGTTOU, SIG_DFL);
+	waitpid(pid, NULL , WUNTRACED);
 	while(1)
 	{
 		if(WIFEXITED(status) && WIFSIGNALED(status))
@@ -92,6 +117,9 @@ void run_in_fg(char *command)
 		}
 		break;
 	}
+	signal(SIGTTOU, SIG_IGN);
+	tcsetpgrp(0, shell);
+	signal(SIGTTOU, SIG_DFL);
 	global_pid = shell_pid;
 
 }

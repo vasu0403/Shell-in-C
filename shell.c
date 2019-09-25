@@ -38,6 +38,8 @@ void stop()
 {
 	if(global_pid != shell_pid)
 	{
+		// printf("%d\n", global_pid);
+		setpgid(global_pid, global_pid);
 		strcpy(name[global_pid], foreground_proc[global_pid]);
 		all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
 		all_jobs[no_of_jobs].job_pid = global_pid;
@@ -106,9 +108,12 @@ int main(int argc, char const *argv[])
 	read_file(home_dir, &front, &rear, &count);
 	shell_pid = getpid();
 	global_pid = shell_pid;
-	signal(SIGINT, control);
+	// signal(SIGINT, control);
 	signal(SIGTSTP, stop);
+	int stdin_temp = dup(0);
+	int stdout_temp = dup(1);
 	clear();
+	// printf("%d\n", shell_pid);
 	while(1)
 	{ 
 		
@@ -124,11 +129,52 @@ int main(int argc, char const *argv[])
 		char *command = strtok_r(arg, ";", &end_cmd);
 		while(command != NULL)
 		{
+			no_of_commands = 0;
 			check_for_background();
-			add_in_history(command, &front, &rear, &count);
-			execute(command, home_dir, front, rear, count);
-			check_for_background();
+			add_in_history(command, &front, &rear, &count);	
+			char *end_cmd2;
+			char *command2 = strtok_r(command, "|", &end_cmd2);
+			while(command2 != NULL)
+			{
+				strcpy(commands[no_of_commands], command2);
+				no_of_commands++;
+				command2 = strtok_r(NULL, "|", &end_cmd2);
+			}
+			// int in = dup(0);
+			// int out = dup(1);
+			for(int i=0; i<no_of_commands; i++)
+			{
+			// 	if(strcmp(commands[i], "quit") == 0)
+			// 			execute(commands[i], home_dir, front, rear, count);
+			// 	dup2(in, 0);
+			// 	close(in);
+			// 	if(i==no_of_commands-1)
+			// 		out = dup(stdout_temp);
+			// 	else
+			// 	{
+			// 		int p[2];
+			// 		pipe(p);
+			// 		out = p[1];
+			// 		in = p[0];
+			// 	}
+			// 	dup2(out, 1);
+			// 	close(out);
+			// 	int pi = fork();
+			// 	if(pi == 0)
+			// 	{	
+					execute(commands[i], home_dir, front, rear, count);
+				// 	exit(0);
+				// }
+				// else
+				// {
+				// 	int status;
+				// 	waitpid(pi, &status, 0);
+				// 	dup2(stdin_temp, 0);
+				// 	dup2(stdout_temp, 1);
+				// }
+			}
 			command = strtok_r(NULL, ";", &end_cmd);
+			check_for_background();
 		}
 		add_to_file(home_dir,front, rear);
 	}

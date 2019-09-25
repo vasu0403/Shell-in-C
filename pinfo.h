@@ -12,7 +12,7 @@ void pinfo(char* command, int l)
 		l++;
 	if(l>=strlen(command))
 	{
-		int t = getpid();
+		int t = getppid();
 		sprintf(pid, "%d", t);
 	}
 	else
