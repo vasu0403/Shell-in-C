@@ -1,3 +1,4 @@
+
 void jobs(char *command)
 {
 	if(no_of_jobs == 0)
@@ -99,24 +100,15 @@ void run_in_fg(char *command)
 	}
 	int pid = all_jobs[job_no -1].job_pid;
 	printf("Running %s in foreground\n", all_jobs[job_no-1].job_name);
-	remove_from_jobs(job_no);
+	remove_from_jobs(job_no-1);
 	global_pid = pid;
-	printf("%d\n", pid);
+	printf("%d\n", global_pid);
 	int shell = getpid();
 	signal(SIGTTOU, SIG_IGN);
-	kill(pid, SIGCONT);
 	tcsetpgrp(0, getpgid(pid));
+	kill(pid, SIGCONT);
 	signal(SIGTTOU, SIG_DFL);
-	waitpid(pid, NULL , WUNTRACED);
-	while(1)
-	{
-		if(WIFEXITED(status) && WIFSIGNALED(status))
-		{
-			waitpid(pid, &status, WUNTRACED);
-			continue;
-		}
-		break;
-	}
+	waitpid(pid, &status , WUNTRACED);
 	signal(SIGTTOU, SIG_IGN);
 	tcsetpgrp(0, shell);
 	signal(SIGTTOU, SIG_DFL);
