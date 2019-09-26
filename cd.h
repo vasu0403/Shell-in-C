@@ -8,11 +8,12 @@ void changeDir(char *args, int l, char *home_dir)
 	if(l>=strlen(args))
 	{
 		if(chdir(home_dir)!=0)
-			perror("Error:");
+			perror("Error");
 		return;
 	}
-	for(; l<=strlen(args); l++)
+	for(; l<=strlen(args) && args[l] != ' '; l++)
 		dest[len++] = args[l];
+	dest[len] = '\0';
 	if(dest[0] == '~')
 	{
 		strcpy(temp, home_dir);
@@ -22,6 +23,6 @@ void changeDir(char *args, int l, char *home_dir)
 		strcpy(dest, temp);
 	}
 	if(chdir(dest)!=0)
-		perror("Error:");
+		perror("Error");
 	return;
 }

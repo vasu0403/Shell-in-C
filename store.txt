@@ -1,16 +1,20 @@
-cat shell.c | sort
-cat shell.c     |    sort
-cat     shell.c   |   sort
-ls
- cat   shell.c | sort
-ls | grep readme
-ls | grep README
-ls | grep a
-ls | grep md
-ls | grep md | wc
+cd .. | ls
+cd ..|ls
+cd .. |ls
+cd .. | ls
+cd ..| ls
+cd .. 
+cd .. | ls
+cd ..   
 cd ..
-cd Shell-in-C
-ls
-ls -l
-ls -l | grep vasu
-ls -l | grep 358
+cd ..     
+cd ..   
+cd .   
+cd ..    
+cd ..   
+cd ..    
+cd ..   
+cd ..   |ls
+cd ..    |ls
+cat shell.c | cd .. | sort
+ls | wc
