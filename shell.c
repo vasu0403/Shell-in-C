@@ -96,6 +96,40 @@ void execute(char *command, char *home_dir, struct history* front, struct histor
 		exec(cmd, command, i+1);
 
 }
+bool check_for_fork(char *cmd)
+{
+	if(strcmp(cmd, "cd") == 0)
+		return false;
+	if(strcmp(cmd, "quit")==0)
+		return false;
+	if(strcmp(cmd, "pwd") == 0)
+		return true;
+	if(strcmp(cmd, "echo") == 0)
+		return true;
+	if(strcmp(cmd, "ls") == 0)
+		return true;
+	if(strcmp(cmd, "pinfo") == 0)
+		return true;
+	if(strcmp(cmd, "history") == 0)
+		return true;
+	if(strcmp(cmd, "nightswatch") == 0)
+		return true;
+	if(strcmp(cmd, "setenv") == 0)
+		return false;
+	if(strcmp(cmd, "unsetenv") == 0)
+		return false;
+	if(strcmp(cmd, "jobs")==0)
+		return true;
+	if(strcmp(cmd, "kjob")==0)
+		return false;
+	if(strcmp(cmd, "bg")==0)
+		return false;
+	if(strcmp(cmd, "overkill")==0)
+		return false;
+	if(strcmp(cmd, "fg")==0)
+		return false;
+	return false;;
+}
 int main(int argc, char const *argv[])
 {	
 	char *temp = (char *)malloc(max_path*sizeof(char));
@@ -140,38 +174,48 @@ int main(int argc, char const *argv[])
 				no_of_commands++;
 				command2 = strtok_r(NULL, "|", &end_cmd2);
 			}
-			// int in = dup(0);
-			// int out = dup(1);
+			int in = dup(0);
+			int out = dup(1);
 			for(int i=0; i<no_of_commands; i++)
 			{
-			// 	if(strcmp(commands[i], "quit") == 0)
-			// 			execute(commands[i], home_dir, front, rear, count);
-			// 	dup2(in, 0);
-			// 	close(in);
-			// 	if(i==no_of_commands-1)
-			// 		out = dup(stdout_temp);
-			// 	else
-			// 	{
-			// 		int p[2];
-			// 		pipe(p);
-			// 		out = p[1];
-			// 		in = p[0];
-			// 	}
-			// 	dup2(out, 1);
-			// 	close(out);
-			// 	int pi = fork();
-			// 	if(pi == 0)
-			// 	{	
+				if(strcmp(commands[i], "quit") == 0)
+						execute(commands[i], home_dir, front, rear, count);
+				dup2(in, 0);
+				close(in);
+				if(i==no_of_commands-1)
+					out = dup(stdout_temp);
+				else
+				{
+					int p[2];
+					pipe(p);
+					out = p[1];
+					in = p[0];
+				}
+				dup2(out, 1);
+				close(out);
+				int flag = check_for_fork(commands[i]);
+				if(flag)
+				{
+					int pi = fork();
+					if(pi == 0)
+					{	
+						execute(commands[i], home_dir, front, rear, count);
+						exit(0);
+					}
+					else
+					{
+						int status;
+						waitpid(pi, &status, 0);
+						dup2(stdin_temp, 0);
+						dup2(stdout_temp, 1);
+					}
+				}
+				else
+				{
 					execute(commands[i], home_dir, front, rear, count);
-				// 	exit(0);
-				// }
-				// else
-				// {
-				// 	int status;
-				// 	waitpid(pi, &status, 0);
-				// 	dup2(stdin_temp, 0);
-				// 	dup2(stdout_temp, 1);
-				// }
+					dup2(stdin_temp, 0);
+					dup2(stdout_temp, 1);
+				}
 			}
 			command = strtok_r(NULL, ";", &end_cmd);
 			check_for_background();

@@ -104,6 +104,7 @@ void foreground(char *cmd)
 }
 void background(char *cmd)
 {
+	// printf("%s\n", cmd);
 	char *args[1000];
 	char *end_cmd;
 	char *token=strtok_r(cmd," ",&end_cmd);
@@ -134,9 +135,7 @@ void background(char *cmd)
 	}
 	else
 	{
-		printf("%d %d\n", pid, getpgid(pid));
 		setpgid(pid,pid);
-		printf("%d %d\n", pid, getpgid(pid));
 		strcpy(name[pid], args[0]);
 		all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
 		all_jobs[no_of_jobs].job_pid = pid;

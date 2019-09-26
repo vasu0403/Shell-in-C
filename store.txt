@@ -1,20 +1,16 @@
-emacs
-jobs
-emacs &
-	
-pinfo
-pindo
-pinfo
-pinf
-pinfo
-emacs
-fg 1
-jobs
-git log
-emacs
-fg 1
-jobs
-emacs
-jobs
-emacs
-jobs
+cat shell.c | sort
+cat shell.c     |    sort
+cat     shell.c   |   sort
+ls
+ cat   shell.c | sort
+ls | grep readme
+ls | grep README
+ls | grep a
+ls | grep md
+ls | grep md | wc
+cd ..
+cd Shell-in-C
+ls
+ls -l
+ls -l | grep vasu
+ls -l | grep 358
