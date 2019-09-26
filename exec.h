@@ -76,6 +76,7 @@ void foreground(char *cmd)
 	int status;
 	if(pid == 0)
 	{
+		setpgid(0, 0);
 		if(execvp(args[0], args)!=0)
 			printf("Error: No such command\n");
 		exit(0);
@@ -86,18 +87,32 @@ void foreground(char *cmd)
 	}
 	else
 	{	
+		int shell_pid = getpid();
 		strcpy(foreground_proc[pid], foreground_name);
 		proc_type[pid] = 0;
 		global_pid = pid;
+		signal(SIGTTOU, SIG_IGN);
+		signal(SIGTTIN, SIG_IGN);
+		tcsetpgrp(0, pid);
+		tcsetpgrp(1, pid);
 		waitpid(pid, &status, WUNTRACED);
-		while(1)
+		tcsetpgrp(0, getpgid(shell_pid));
+		tcsetpgrp(1, getpgid(shell_pid));
+		signal(SIGTTOU, SIG_DFL);
+		signal(SIGTTIN, SIG_DFL);
+		if(WIFSTOPPED(status))
 		{
-			if(WIFEXITED(status) && WIFSIGNALED(status))
-			{
-				waitpid(pid, &status, WUNTRACED);
-				continue;
-			}
-			break;
+			// setpgid(global_pid, global_pid);
+			strcpy(name[global_pid], foreground_proc[global_pid]);
+			all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
+			all_jobs[no_of_jobs].job_pid = global_pid;
+			strcpy(all_jobs[no_of_jobs].job_status, "Stopped");
+			strcpy(all_jobs[no_of_jobs].job_name, foreground_proc[global_pid]);
+			job_pid_to_job_number[global_pid] = no_of_jobs;
+			printf("\n[%d] + suspended  %s\n", no_of_jobs + 1, name[global_pid]);
+			no_of_jobs++;
+			kill(global_pid, SIGSTOP);
+			global_pid = shell_pid;
 		}
 		global_pid = shell_pid;
 	}

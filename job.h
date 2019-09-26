@@ -105,13 +105,27 @@ void run_in_fg(char *command)
 	printf("%d\n", global_pid);
 	int shell = getpid();
 	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
 	tcsetpgrp(0, getpgid(pid));
 	kill(pid, SIGCONT);
-	signal(SIGTTOU, SIG_DFL);
 	waitpid(pid, &status , WUNTRACED);
-	signal(SIGTTOU, SIG_IGN);
 	tcsetpgrp(0, shell);
 	signal(SIGTTOU, SIG_DFL);
+	signal(SIGTTIN, SIG_DFL);
+	if(WIFSTOPPED(status))
+	{
+		setpgid(global_pid, global_pid);
+		strcpy(name[global_pid], foreground_proc[global_pid]);
+		all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
+		all_jobs[no_of_jobs].job_pid = global_pid;
+		strcpy(all_jobs[no_of_jobs].job_status, "Stopped");
+		strcpy(all_jobs[no_of_jobs].job_name, foreground_proc[global_pid]);
+		job_pid_to_job_number[global_pid] = no_of_jobs;
+		printf("\n[%d] + suspended  %s\n", no_of_jobs + 1, name[global_pid]);
+		no_of_jobs++;
+		kill(global_pid, SIGSTOP);
+		global_pid = shell_pid;
+	}
 	global_pid = shell_pid;
 
 }

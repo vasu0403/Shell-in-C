@@ -1,20 +1,20 @@
-fg 6341
-jobs
 fg 1
-cd ..
-cd Shell-in-C
-ls
-ls -l
-cat shell.c | sort
-cat |shell.c     |    wc -l
-cat shell.c |     sort |   wc    -   l
-cat shell.c | sort    | wc -l
-cat shell.c | sort | wc
-emacs &
 jobs
 fg 1
 jobs
+vim
 vim &
 jobs
 fg 1
+jobs
+emacs
+jobs
+fg 1
+jobs
+fg 1
+emacs &
+fg 1
+jobs
+cat shell.c | sort -n | sort -nr
+ls | emacs &
 jobs

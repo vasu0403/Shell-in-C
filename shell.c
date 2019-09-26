@@ -25,21 +25,21 @@ void control()
 }
 void stop()
 {
-	if(global_pid != shell_pid)
-	{
-		setpgid(global_pid, global_pid);
-		strcpy(name[global_pid], foreground_proc[global_pid]);
-		all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
-		all_jobs[no_of_jobs].job_pid = global_pid;
-		strcpy(all_jobs[no_of_jobs].job_status, "Stopped");
-		strcpy(all_jobs[no_of_jobs].job_name, foreground_proc[global_pid]);
-		job_pid_to_job_number[global_pid] = no_of_jobs;
-		printf("\n[%d] + suspended  %s\n", no_of_jobs + 1, name[global_pid]);
-		no_of_jobs++;
-		kill(global_pid, SIGSTOP);
-		global_pid = shell_pid;
-		return;
-	}
+	// if(global_pid != shell_pid)
+	// {
+	// 	setpgid(global_pid, global_pid);
+	// 	strcpy(name[global_pid], foreground_proc[global_pid]);
+	// 	all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
+	// 	all_jobs[no_of_jobs].job_pid = global_pid;
+	// 	strcpy(all_jobs[no_of_jobs].job_status, "Stopped");
+	// 	strcpy(all_jobs[no_of_jobs].job_name, foreground_proc[global_pid]);
+	// 	job_pid_to_job_number[global_pid] = no_of_jobs;
+	// 	printf("\n[%d] + suspended  %s\n", no_of_jobs + 1, name[global_pid]);
+	// 	no_of_jobs++;
+	// 	kill(global_pid, SIGSTOP);
+	// 	global_pid = shell_pid;
+	// 	return;
+	// }
 }
 #include "prompt.h"
 #include "cd.h"
@@ -120,6 +120,8 @@ int main(int argc, char const *argv[])
 		size_t len = 0;
 		check_for_background();
 		getline(&arg, &len, stdin);
+		// for(int i=0; i<strlen(arg); i++)
+		// 	printf("%d ", arg[i]);
 		check_for_background();
 		arg[len-1] =  '\0';
 		if(strcmp(arg, "\n")==0)continue;
@@ -161,29 +163,22 @@ int main(int argc, char const *argv[])
 					}
 					dup2(out, 1);
 					close(out);
-					int flag = check_for_fork(commands[i]);
-					if(flag)
-					{
-						int pi = fork();
-						if(pi == 0)
-						{	
-							execute(commands[i], home_dir, front, rear, count);
-							exit(0);
-						}
-						else
-						{
-							int status;
-							waitpid(pi, &status, 0);
-							dup2(stdin_temp, 0);
-							dup2(stdout_temp, 1);
-						}
+					int pi = fork();
+					if(pi == 0)
+					{	
+						execute(commands[i], home_dir, front, rear, count);
+						exit(0);
 					}
 					else
 					{
-						execute(commands[i], home_dir, front, rear, count);
+						int status;
+						waitpid(pi, &status, 0);
 						dup2(stdin_temp, 0);
 						dup2(stdout_temp, 1);
 					}
+					dup2(stdin_temp, 0);
+					dup2(stdout_temp, 1);
+					
 				}
 			}
 			command = strtok_r(NULL, ";", &end_cmd);
