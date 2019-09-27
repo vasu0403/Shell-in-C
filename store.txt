@@ -1,20 +1,20 @@
-history
-pwd
-history
-emacs
-jobs
-fg 1
-jobs
-fg 1
-jobs
-emacs &
-fg 1
-jobs
 ls
+history
+cat < hello
+history
+rm hello
+cat < shell.c > hello
+cat hello
+ls
+history
+ls
+history
+ls
+rm hello
+cat shell.c | rev | sort > hello
+history
 cat hello
 rm hello
-clear
-cat shell.c | rev | rev > hello
+history
+cat shell.c | rev | sort > hello
 cat hello
-cat < hello.c
-cat < hello

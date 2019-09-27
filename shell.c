@@ -156,8 +156,9 @@ int main(int argc, char const *argv[])
 				}
 				strcpy(arg, temp->command);
 			}
+			print_prompt(home_dir);
 			printf("%s\n", arg);
-			continue;
+			fflush(stdout);
 		}
 		check_for_background();
 		// arg[len-1] =  '\0';
