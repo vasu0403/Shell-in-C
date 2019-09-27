@@ -1,6 +1,3 @@
-ls
-history
-cat < hello
 history
 rm hello
 cat < shell.c > hello
@@ -18,3 +15,6 @@ rm hello
 history
 cat shell.c | rev | sort > hello
 cat hello
+rev < shell.c | sort
+rev < shell.c | sort > hello
+rev | sort < shell.c

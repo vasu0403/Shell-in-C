@@ -244,6 +244,7 @@ int main(int argc, char const *argv[])
 			{	
 				int in = dup(0);
 				int out = dup(1);
+				int check = 1;
 				for(int i=0; i<no_of_commands; i++)
 				{
 					if(strcmp(commands[i], "quit") == 0)
@@ -252,6 +253,27 @@ int main(int argc, char const *argv[])
 					close(in);
 					output_file_len= 0;
 					output = 0;
+					input_file_len = 0;
+					input = 0;
+					input = check_input_redirection(commands[i]);
+					if(input)
+					{
+						output_command_len = 0;
+						find_command(commands[i]);
+						strcpy(commands[i], output_command);
+						commands[i][output_command_len] = '\0';
+						int fd = open(input_file, O_RDONLY);
+						if(fd == -1)
+						{
+							check = 0;
+							printf("Error: input file given does not exist\n");
+						}
+						else
+						{	
+							dup2(fd, 0);
+							close(fd);
+						}
+					}
 					output = check_output_redirection(commands[i]);
 					if(i==no_of_commands-1)
 					{	
@@ -288,7 +310,8 @@ int main(int argc, char const *argv[])
 					int pi = fork();
 					if(pi == 0)
 					{	
-						execute(commands[i], home_dir, front, rear, count);
+						if(check)
+							execute(commands[i], home_dir, front, rear, count);
 						exit(0);
 					}
 					else
