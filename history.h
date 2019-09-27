@@ -99,6 +99,7 @@ void show_history(char *comm, int l, struct history* front, struct history* rear
 					printf("%s\n", front->command);
 				else
 					printf("%s", front->command);
+				fflush(stdout);
 			}
 			front = front->next;
 		}
@@ -129,6 +130,7 @@ void show_history(char *comm, int l, struct history* front, struct history* rear
 					printf("%s\n", front->command);
 				else
 					printf("%s", front->command);
+				fflush(stdout);
 			}
 			front = front->next;
 		}

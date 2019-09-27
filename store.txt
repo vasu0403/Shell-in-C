@@ -1,20 +1,20 @@
-cat shell.c | rev
+history
+pwd
+history
+emacs
+jobs
+fg 1
+jobs
+fg 1
+jobs
+emacs &
+fg 1
+jobs
 ls
-jobs
-emacs &
-jobs
-emacs &
-jobs
-emacs &
-jobs
-pinfo 777
-exit
-sort < hello.c > hello
-sort <   new   >>hello
-quit
-sort > hello
-rev < cd.h > hello
 cat hello
 rm hello
-rev < cd.h > hello
-rev < list.h >> hello
+clear
+cat shell.c | rev | rev > hello
+cat hello
+cat < hello.c
+cat < hello

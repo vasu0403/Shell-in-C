@@ -119,12 +119,49 @@ int main(int argc, char const *argv[])
 		print_prompt(home_dir);
 		char *arg = NULL;
 		size_t len = 0;
+		int times = 0, j;
 		check_for_background();
+		// scanf(" %[^\n]s", arg);
 		getline(&arg, &len, stdin);
-		// for(int i=0; i<strlen(arg); i++)
-		// 	printf("%d ", arg[i]);
+		arg[strlen(arg)-1] = '\0';
+		for(int i=0; i<strlen(arg); i++)
+			key[i] = arg[i];
+		for(int i=0; i<strlen(arg); i++)
+		{
+			if(key[i] == up[j])
+			{
+				j++;
+				if(j==3)
+				{
+					times++;
+					j = 0;
+				}
+			}
+			else
+				j = 0;
+		}
+		if(times)
+		{
+			struct history* temp;
+			temp = front;
+			if(times >= count)
+				strcpy(arg, front->command);
+			else
+			{
+				times = count - times;
+				while(times > 0)
+				{	
+					temp = temp->next;
+					times--;
+				}
+				strcpy(arg, temp->command);
+			}
+			printf("%s\n", arg);
+			continue;
+		}
 		check_for_background();
-		arg[len-1] =  '\0';
+		// arg[len-1] =  '\0';
+		// printf("%s %d", arg, strlen(arg));
 		if(strcmp(arg, "\n")==0)continue;
 		char *end_cmd;
 		char *command = strtok_r(arg, ";", &end_cmd);

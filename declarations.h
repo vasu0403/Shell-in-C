@@ -29,3 +29,5 @@ char output_file[10000], input_file[10000];
 int output_file_len, input_file_len, output, input;
 char output_command[10000];
 int output_command_len;
+int key[1000];
+int up[] = {27, 91, 65};
