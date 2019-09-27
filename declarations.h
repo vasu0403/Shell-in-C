@@ -25,3 +25,7 @@ char name[100000][20];
 char foreground_proc[100000][30];
 char commands[1000][1000];
 int no_of_commands = 0;
+char output_file[10000], input_file[10000];
+int output_file_len, input_file_len, output, input;
+char output_command[10000];
+int output_command_len;

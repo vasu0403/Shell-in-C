@@ -1,0 +1,192 @@
+)rid_emoh* rahc ,l tni ,sgra* rahc(riDegnahc diov
+{
+;))rahc(foezis * htap_xam(collam)* rahc( = tsed* rahc	
+;))rahc(foezis * htap_xam(collam)* rahc( = pmet* rahc	
+;i ,0 = nel tni	
+)' '==]l[sgra && )sgra(nelrts<l(elihw	
+;++l		
+))sgra(nelrts=>l(fi	
+{	
+)0=!)rid_emoh(ridhc(fi		
+;)"rorrE"(rorrep			
+;nruter		
+}	
+)++l ;' ' =! ]l[sgra && )sgra(nelrts=<l ;(rof	
+;]l[sgra = ]++nel[tsed		
+;'0\' = ]nel[tsed	
+)'~' == ]0[tsed(fi	
+{	
+;)rid_emoh ,pmet(ypcrts		
+;)pmet(nelrts = nel		
+)++i ;)tsed(nelrts<i ;1=i(rof		
+;]i[tsed = ]++nel[pmet			
+;)pmet ,tsed(ypcrts		
+}	
+)0=!)tsed(ridhc(fi	
+;)"rorrE"(rorrep		
+;nruter	
+}
+)tnirp* rahc ,elif* rahc(snoissimrep diov
+{
+;0=1l ,i ,1 = nel ,]9[noissimrep tni	
+;))rahc(foezis*001(collam)* rahc( = resu* rahc	
+;))rahc(foezis*001(collam)* rahc( = puorg* rahc	
+;))rahc(foezis*001(collam)* rahc( = emit* rahc	
+;))rahc(foezis*001(collam)* rahc( = htnom* rahc	
+;))rahc(foezis*001(collam)* rahc( = yad* rahc	
+;))rahc(foezis*001(collam)* rahc( = it* rahc	
+;tatselif tats tcurts	
+;RSURI_S = ]0[noissimrep	
+;RSUWI_S = ]1[noissimrep	
+;RSUXI_S = ]2[noissimrep	
+;PRGRI_S = ]3[noissimrep	
+;PRGWI_S = ]4[noissimrep	
+;PRGXI_S = ]5[noissimrep	
+;HTORI_S = ]6[noissimrep	
+;HTOWI_S = ]7[noissimrep	
+;HTOXI_S = ]8[noissimrep	
+;"xwr" = ][p rahc	
+;))rahc(foezis*01(collam)* rahc( = pmet* rahc	
+;)tatselif& ,elif(tats	
+;))emitm_ts.tatselif&(emitc ,emit(ypcrts	
+;0=1l ,0=i	
+)' '=!]i[emit(elihw	
+;++i		
+;++i	
+)' '=!]i[emit(elihw	
+;]++i[emit = ]++1l[htnom		
+;'0\' = ]3[htnom	
+;++i	
+;0=1l	
+)2<1l(elihw	
+	{	
+;]++i[emit = ]++1l[yad		
+}	
+;'0\' = ]2[yad	
+;++i	
+;0=1l	
+)5<1l(elihw	
+;]++i[emit = ]++1l[it		
+	;'0\' = ]5[it	
+))edom_ts.tatselif(RIDSI_S(fi	
+;'d' = ]0[pmet		
+))edom_ts.tatselif(KLBSI_S(fi esle	
+;'b' = ]0[pmet		
+))edom_ts.tatselif(RHCSI_S(fi esle	
+;'c' = ]0[pmet		
+))edom_ts.tatselif(KNLSI_S(fi esle	
+;'l' = ]0[pmet		
+))edom_ts.tatselif(KCOSSI_S(fi esle	
+;'b' = ]0[pmet		
+esle	
+;'-' = ]0[pmet		
+)++i ;8<i ;0=i(rof	
+{	
+)edom_ts.tatselif&]i[noissimrep(fi		
+;]3%i[p = ]++nel[pmet			
+esle		
+;'-' = ]++nel[pmet			
+}	
+)RSUXI_S & edom_ts.tatselif(fi	
+;'x' = ]++nel[pmet		
+esle	
+;'-' = ]++nel[pmet		
+;'0\' = ]01[pmet	
+;'0\' = ]5[it	
+;)diu_ts.tatselif(diuwpteg =di_resu* dwssap tcurts	
+;)dig_ts.tatselif(digrgteg =di_puorg* puorg tcurts	
+;t tni	
+;emitm_ts.tatselif = t	
+;)emit,"n\s%"(ftnirp //	
+;)elif ,it ,yad ,htnom ,ezis_ts.tatselif ,eman_rg>-di_puorg ,eman_wp>-di_resu ,kniln_ts.tatselif ,pmet ,"n\s% s% s% s%t\dl%t\s%t\s%t\dl%t\s%"(ftnirp	
+;)pmet(eerf	
+;)resu(eerf	
+;)puorg(eerf	
+;)emit(eerf	
+;)htnom(eerf	
+;)yad(eerf	
+;)it(eerf	
+}
+)f tni ,rid* rahc(tsil diov
+{
+;rd* RID	
+;elif *tnerid tcurts	
+;)rid(ridnepo = rd	
+)LLUN == rd(fi	
+{	
+;)"n\yrotcerid dilavnI :rorrE"(ftnirp		
+;nruter		
+}	
+;))rahc(foezis*nel_xam(collam)* rahc( = emanelif* rahc	
+)LLUN=!))rd(riddaer = elif((elihw	
+	{	
+;)eman_d>-elif ,emanelif(ypcrts		
+)f || '.'=!]0[emanelif(fi		
+;)emanelif ,"n\s%"(ftnirp			
+}	
+;)rd(ridesolc	
+;nruter	
+}
+)f tni ,rid* rahc(gnoLtsil diov
+{
+;rd* RID	
+;elif *tnerid tcurts	
+;)rid(ridnepo = rd	
+)LLUN == rd(fi	
+{	
+;)"n\yrotcerid dilavnI :rorrE"(ftnirp		
+;nruter		
+}	
+;))rahc(foezis*nel_xam(collam)* rahc( = emanelif* rahc	
+;))rahc(foezis*nel_xam(collam)* rahc( = tnirp* rahc	
+)LLUN=!))rd(riddaer = elif((elihw	
+{	
+;)eman_d>-elif ,emanelif(ypcrts		
+)f || '.'=!]0[emanelif(fi		
+{		
+;)tnirp ,emanelif(snoissimrep			
+}		
+}	
+}
+)rid_emoh* rahc ,l tni ,dnammoc* rahc(sl diov
+{
+;2nel ,0=2f ,0=1f ,0 = nel ,i ,0 = galf tni	
+;))rahc(foezis*nel_xam(collam)* rahc( = rid* rahc	
+;))rahc(foezis*nel_xam(collam)* rahc( = pmet* rahc	
+)++i ;)dnammoc(nelrts<i ;l=i(rof	
+{	
+)'-' == ]i[dnammoc(fi		
+;1 = galf			
+)' '=!]i[dnammoc(fi esle		
+;]i[dnammoc = ]++nel[rid			
+}	
+)galf(fi	
+	{	
+)++i ;)rid(nelrts<i ;0=i(rof		
+{		
+)'a'==]i[rid(fi			
+;1 = 1f				
+)'l'==]i[rid(fi			
+;1 = 2f				
+}		
+;)"." ,rid(ypcrts		
+}	
+)0==)rid(nelrts(fi esle	
+;)"." ,rid(ypcrts		
+)'~'==]0[rid(fi	
+{	
+;)rid_emoh ,pmet(ypcrts		
+;)pmet(nelrts = 2nel		
+)++i ;nel<i ;1=i(rof		
+;]i[rid = ]++2nel[pmet			
+;'0\' = ]2nel[pmet		
+;)pmet ,rid(ypcrts		
+;)rid ,"n\s%"(ftnirp		
+}	
+)2f(fi	
+	{	
+;)1f ,rid(gnoLtsil		
+}	
+esle	
+;)1f ,rid(tsil		
+}

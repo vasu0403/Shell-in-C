@@ -1,20 +1,20 @@
-fg 1
+cat shell.c | rev
+ls
 jobs
-fg 1
-jobs
-vim
-vim &
-jobs
-fg 1
-jobs
-emacs
-jobs
-fg 1
-jobs
-fg 1
 emacs &
-fg 1
 jobs
-cat shell.c | sort -n | sort -nr
-ls | emacs &
+emacs &
 jobs
+emacs &
+jobs
+pinfo 777
+exit
+sort < hello.c > hello
+sort <   new   >>hello
+quit
+sort > hello
+rev < cd.h > hello
+cat hello
+rm hello
+rev < cd.h > hello
+rev < list.h >> hello

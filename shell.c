@@ -52,6 +52,7 @@ void stop()
 #include "watch.h"
 #include "env.h"
 #include "job.h"
+#include "piping_redirection.h"
 void execute(char *command, char *home_dir, struct history* front, struct history* rear, int count)
 {
 	int i = 0, len=0;
@@ -129,9 +130,15 @@ int main(int argc, char const *argv[])
 		char *command = strtok_r(arg, ";", &end_cmd);
 		while(command != NULL)
 		{
+			int z1 = 1, z2 = 1;
 			no_of_commands = 0;
 			check_for_background();
 			add_in_history(command, &front, &rear, &count);	
+			if(empty_pipe(command))
+			{
+				printf("Invalid command\n");
+				z2 = 0;
+			}
 			char *end_cmd2;
 			char *command2 = strtok_r(command, "|", &end_cmd2);
 			while(command2 != NULL)
@@ -140,9 +147,62 @@ int main(int argc, char const *argv[])
 				no_of_commands++;
 				command2 = strtok_r(NULL, "|", &end_cmd2);
 			}
-			if(no_of_commands == 1)
-				execute(commands[0], home_dir, front, rear, count);
-			else
+			if(bg_in_between())
+			{
+				printf("parse error near `|'\n");
+				z1 = 0;
+			}
+			if(no_of_commands == 1 && z2)
+			{	
+				int check = 1;
+				output_file_len= 0, input_file_len = 0;
+				output = 0, input = 0;
+				output = check_output_redirection(commands[0]);
+				input = check_input_redirection(commands[0]);
+				// printf("%d %d %s %d %s %d\n", output,input, output_file, output_file_len, input_file, input_file_len);
+				if(output)
+				{
+					output_command_len = 0;
+					find_command(commands[0]);
+					strcpy(commands[0], output_command);
+					commands[0][output_command_len] = '\0';
+					if(output == 1)
+					{
+						int fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+						dup2(fd, 1);
+						close(fd);
+					}
+					else
+					{
+						int fd = open(output_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+						dup2(fd, 1);
+						close(fd);
+					}
+				}
+				if(input)
+				{
+					output_command_len = 0;
+					find_command(commands[0]);
+					strcpy(commands[0], output_command);
+					commands[0][output_command_len] = '\0';
+					int fd = open(input_file, O_RDONLY);
+					if(fd == -1)
+					{
+						check = 0;
+						printf("Error: input file given does not exist\n");
+					}
+					else
+					{	
+						dup2(fd, 0);
+						close(fd);
+					}
+				}
+				if(check)
+					execute(commands[0], home_dir, front, rear, count);
+				dup2(stdin_temp, 0);
+				dup2(stdout_temp, 1);
+			}
+			else if(z1 && z2)
 			{	
 				int in = dup(0);
 				int out = dup(1);
@@ -152,8 +212,32 @@ int main(int argc, char const *argv[])
 							execute(commands[i], home_dir, front, rear, count);
 					dup2(in, 0);
 					close(in);
+					output_file_len= 0;
+					output = 0;
+					output = check_output_redirection(commands[i]);
 					if(i==no_of_commands-1)
+					{	
 						out = dup(stdout_temp);
+						if(output)
+						{
+							output_command_len = 0;
+							find_command(commands[i]);
+							strcpy(commands[i], output_command);
+							commands[i][output_command_len] = '\0';
+							if(output == 1)
+							{
+								int fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+								out = dup(fd);
+								close(fd);
+							}
+							else
+							{
+								int fd = open(output_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+								out = dup(fd);
+								close(fd);
+							}
+						}
+					}
 					else
 					{
 						int p[2];
@@ -177,8 +261,7 @@ int main(int argc, char const *argv[])
 						dup2(stdout_temp, 1);
 					}
 					dup2(stdin_temp, 0);
-					dup2(stdout_temp, 1);
-					
+					dup2(stdout_temp, 1);					
 				}
 			}
 			command = strtok_r(NULL, ";", &end_cmd);
