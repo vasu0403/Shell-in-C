@@ -1,20 +1,20 @@
-cronjob -c ls -la -t 3 -p 43
-cronjob -c ls -t 3 -p 6
-ls
-cronjob -c pinfo -t 2 -p 8
-pinfo | grep pid
-clear
-cronjob -c ls -l -t 2 -p 10
-cronjob -c ls -l -t 3 -p 12
+emacs &
+fg 1
+emacs &
+fg 1
 jobs
-cronjob -c ls -l -t 3 -p 12
-ls
+bg 1
 jobs
-ls
-history
-cronjob -c ls -l -t 3 -p 12
+emacs &
+fg 1
 jobs
-history
-cronjob -c ls -l -t 3 -p 12
-kjob 1 9
+fg 1
+vim
+vim &
 jobs
+fg 1
+jobs
+sort < cd.h > hello
+cat hello
+sort < cd.h | rev > oup
+cat oup

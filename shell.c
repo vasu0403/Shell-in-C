@@ -200,7 +200,6 @@ int main(int argc, char const *argv[])
 				output = 0, input = 0;
 				output = check_output_redirection(commands[0]);
 				input = check_input_redirection(commands[0]);
-				// printf("%d %d %s %d %s %d\n", output,input, output_file, output_file_len, input_file, input_file_len);
 				if(output)
 				{
 					output_command_len = 0;
@@ -263,8 +262,6 @@ int main(int argc, char const *argv[])
 					{
 						output_command_len = 0;
 						find_command(commands[i]);
-						strcpy(commands[i], output_command);
-						commands[i][output_command_len] = '\0';
 						int fd = open(input_file, O_RDONLY);
 						if(fd == -1)
 						{
@@ -285,8 +282,6 @@ int main(int argc, char const *argv[])
 						{
 							output_command_len = 0;
 							find_command(commands[i]);
-							strcpy(commands[i], output_command);
-							commands[i][output_command_len] = '\0';
 							if(output == 1)
 							{
 								int fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -308,6 +303,8 @@ int main(int argc, char const *argv[])
 						out = p[1];
 						in = p[0];
 					}
+					if(input || output)
+						strcpy(commands[i], output_command);
 					dup2(out, 1);
 					close(out);
 					int pi = fork();

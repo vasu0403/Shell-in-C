@@ -1,0 +1,28 @@
+{
+}
+	{
+	{
+	}
+	}
+	char *dest = (char *)malloc(max_path * sizeof(char));
+	char *temp = (char *)malloc(max_path * sizeof(char));
+	dest[len] = '\0';
+		dest[len++] = args[l];
+		for(i=1; i<strlen(dest); i++)
+	for(; l<=strlen(args) && args[l] != ' '; l++)
+	if(chdir(dest)!=0)
+		if(chdir(home_dir)!=0)
+	if(dest[0] == '~')
+	if(l>=strlen(args))
+	int len = 0, i;
+		l++;
+		len = strlen(temp);
+			perror("Error");
+		perror("Error");
+		return;
+	return;
+		strcpy(dest, temp);
+		strcpy(temp, home_dir);
+			temp[len++] = dest[i];
+void changeDir(char *args, int l, char *home_dir)
+	while(l<strlen(args) && args[l]==' ')

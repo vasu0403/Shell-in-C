@@ -102,7 +102,6 @@ void run_in_fg(char *command)
 	printf("Running %s in foreground\n", all_jobs[job_no-1].job_name);
 	remove_from_jobs(job_no-1);
 	global_pid = pid;
-	printf("%d\n", global_pid);
 	int shell = getpid();
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
@@ -115,11 +114,10 @@ void run_in_fg(char *command)
 	if(WIFSTOPPED(status))
 	{
 		setpgid(global_pid, global_pid);
-		strcpy(name[global_pid], foreground_proc[global_pid]);
 		all_jobs[no_of_jobs].job_number = no_of_jobs + 1;
 		all_jobs[no_of_jobs].job_pid = global_pid;
 		strcpy(all_jobs[no_of_jobs].job_status, "Stopped");
-		strcpy(all_jobs[no_of_jobs].job_name, foreground_proc[global_pid]);
+		strcpy(all_jobs[no_of_jobs].job_name, name[global_pid]);
 		job_pid_to_job_number[global_pid] = no_of_jobs;
 		printf("\n[%d] + suspended  %s\n", no_of_jobs + 1, name[global_pid]);
 		no_of_jobs++;
