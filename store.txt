@@ -1,20 +1,20 @@
-history
-rm hello
-cat < shell.c > hello
-cat hello
+cronjob -c ls -la -t 3 -p 43
+cronjob -c ls -t 3 -p 6
+ls
+cronjob -c pinfo -t 2 -p 8
+pinfo | grep pid
+clear
+cronjob -c ls -l -t 2 -p 10
+cronjob -c ls -l -t 3 -p 12
+jobs
+cronjob -c ls -l -t 3 -p 12
+ls
+jobs
 ls
 history
-ls
+cronjob -c ls -l -t 3 -p 12
+jobs
 history
-ls
-rm hello
-cat shell.c | rev | sort > hello
-history
-cat hello
-rm hello
-history
-cat shell.c | rev | sort > hello
-cat hello
-rev < shell.c | sort
-rev < shell.c | sort > hello
-rev | sort < shell.c
+cronjob -c ls -l -t 3 -p 12
+kjob 1 9
+jobs

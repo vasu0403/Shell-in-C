@@ -21,7 +21,7 @@ struct job_struct all_jobs[100000];
 int job_pid_to_job_number[100000];
 int proc_type[100000];
 pid_t global_pid, shell_pid;
-char name[100000][20];
+char name[100000][40];
 char foreground_proc[100000][30];
 char commands[1000][1000];
 int no_of_commands = 0;

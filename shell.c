@@ -53,6 +53,7 @@ void stop()
 #include "env.h"
 #include "job.h"
 #include "piping_redirection.h"
+#include "cron.h"
 void execute(char *command, char *home_dir, struct history* front, struct history* rear, int count)
 {
 	int i = 0, len=0;
@@ -90,6 +91,8 @@ void execute(char *command, char *home_dir, struct history* front, struct histor
 		run_in_bg(command);
 	else if(strcmp(cmd, "overkill")==0)
 		overkill(command);
+	else if(strcmp(cmd, "cronjob")==0)
+		cronjob(command, home_dir, front, rear, count);
 	else if(strcmp(cmd, "fg")==0)
 		run_in_fg(command);
 	else
